@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import './styles.css'
+import React from 'react' // Importa o React
+import { Link } from 'react-router-dom' // Importa Link do react-router-dom
+import './styles.css' // Importa o css
 
-export default function ConfirmRegister() {
+const ConfirmRegister = () => { // Stateless component ConfirmRegister, apenas informa ao usuário sobre o cadastro e verificação do e-mail
     return(
         <div className='information'>
             <h1>MyTest</h1>
@@ -14,3 +14,5 @@ export default function ConfirmRegister() {
         </div>
     )
 }
+
+export default ConfirmRegister

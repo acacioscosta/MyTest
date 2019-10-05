@@ -1,14 +1,12 @@
-import React from 'react'
-import './App.css'
+import React from 'react' // Importa React
+import './App.css' // Importa arquivo CSS
 
-import Routes from './routes'
+import Routes from './routes' // Importa componente de rotas
 
-function App() {
+export default function App() {
   return (
     <div className="container">
       <Routes />
     </div>
-  );
+  )
 }
-
-export default App;

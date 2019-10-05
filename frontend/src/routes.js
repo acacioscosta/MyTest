@@ -1,13 +1,13 @@
-import React from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import React from 'react' // Importa React
+import { BrowserRouter, Route, Switch } from 'react-router-dom' // Importa BrowserRouter, Route e Switch do react-router-dom
 
-import Home from './pages/Home'
-import New from './pages/New'
-import Profile from './pages/Profile'
-import ConfirmRegister from './pages/ConfirmRegister'
-import Active from './pages/Active'
+import Home from './pages/Home' // Importa component Home
+import New from './pages/New' // Importa component New
+import Profile from './pages/Profile' // Importa component Profile
+import ConfirmRegister from './pages/ConfirmRegister' // Importa component ConfirmRegister
+import Active from './pages/Active' // Importa component Active
 
-export default function Routes() {
+export default function Routes() { // Componente que controla as rotas
     return(
         <BrowserRouter>
             <Switch>
