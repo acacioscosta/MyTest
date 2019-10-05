@@ -1,0 +1,16 @@
+.information{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.information h1{
+    margin-bottom: 10px;
+}
+
+.information h2{
+    margin-bottom: 20px;
+}
+
