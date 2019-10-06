@@ -3,10 +3,12 @@ import './App.css' // Importa arquivo CSS
 
 import Routes from './routes' // Importa componente de rotas
 
-export default function App() {
-  return (
+const App = () => { // Stateless component App
+  return(
     <div className="container">
       <Routes />
     </div>
   )
 }
+
+export default App
