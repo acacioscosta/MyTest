@@ -87,7 +87,7 @@ export default function New({ history }) { // Componente responsável pela pági
                 <label htmlFor="password_user">Senha: * <span>(mínimo 6 dígitos, pelo menos uma letra minúscula, uma maiúscula e números)</span></label>
                 <input type="password" id='password_user' placeholder='Sua senha' onChange={event => recoveryPassword(event)} required />
 
-                <label htmlFor="confirm_password_user">Senha: * <span>(senha deve ser a mesma digitada anteriormente)</span></label>
+                <label htmlFor="confirm_password_user">Confirme sua senha: * <span>(senha deve ser a mesma digitada anteriormente)</span></label>
                 <input type="password" id='confirm_password_user' placeholder='Confirme sua senha' onChange={event => recoveryConfirmPassword(event)} required />
 
                 <button className='btn blue' type='submit' >CADASTRAR</button>
