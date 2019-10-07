@@ -2,7 +2,7 @@ const nodemailer = require('nodemailer') // Importa o módulo de envio de e-mail
 require('dotenv/config') // Importa arquivo para utilização das variáveis de ambiente
 
 module.exports = {
-    email(data, id_user) { // Função que faz o envio de e-mail para o usuário cadastrado
+    email(data, hash) { // Função que faz o envio de e-mail para o usuário cadastrado
         const { username, email_user } = data // Desestruturação para para pegar apenas o que é necessário
 
         const transporte = nodemailer.createTransport({ // Função que configura o servidor de e-mail
@@ -17,12 +17,12 @@ module.exports = {
             from: process.env.ADRESS_MAIL, // E-mail remetente
             to: `${email_user}`, // E-mail destino
             subject: `Olá, ${username}`,  // Assunto do e-mail
-            html: `Segue abaixo seu link para confirmação de cadastro no MyTest <br /> <a href="http://localhost:3001/active/${id_user}" >ATIVAR CADASTRO</a>` // Conteúdo do e-mail, aqui está como html
+            html: `Segue abaixo seu link para confirmação de cadastro no MyTest <br /> <a href="http://localhost:3001/active/${hash}" >ATIVAR CADASTRO</a>` // Conteúdo do e-mail, aqui está como html
         }
         
         transporte.sendMail(email, function(err, info){ // Realiza o envio do e-mail de acordo com as configurações acima
             if(err) // Executa caso gere erro
-              return err // Oops, algo de errado aconteceu.
+              return err // Retorna o erro
           
             return console.log('Email enviado!') // Apenas dá um log sobre o aviso
         })
