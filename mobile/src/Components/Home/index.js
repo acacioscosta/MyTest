@@ -10,26 +10,26 @@ export default function Home(props) {
     const [error, setError] = useState(false) // State que controla a exibição ou não da informação de usuário e/ou senha inválidos
     const [inactive, setInactive] = useState(false) // State que controla a exibição ou não da informação de usuário bloqueado
 
-    function recoveryEmailOrUsername(event) {
-        const lower = event.toLowerCase()
-        setEmailOrUsername(lower)
-        clearMessage()
+    function recoveryEmailOrUsername(event) { // Função que recupera e armazena o valor digitado no campo de Login
+        const lower = event.toLowerCase() // Transforma todo o texto em minúsculo
+        setEmailOrUsername(lower) // Armazena o valor digitado no estado email
+        clearMessage() // Limpa mensagens de erro da tela, casa haja
     }
 
-    function recoveryPassword(event) {
-        setPassword(event)
-        clearMessage()
+    function recoveryPassword(event) { // Função que recupera e armazena o valor digitado no campo de senha
+        setPassword(event) // Armazena o valor digitado no estado password_user
+        clearMessage() // Limpa mensagens de erro da tela, casa haja
     }
 
-    function clearMessage() {
-        setError(false)
-        setInactive(false)
+    function clearMessage() { // Função que limpa mensagens de erro da tela, casa haja
+        setError(false) // Altera estado error para retirar mensagem da tela, caso esteja
+        setInactive(false) // Altera estado inactive para retirar mensagem da tela, caso esteja
     }
 
-    async function login() {
-        const response = await api.post('/auth', { emailOrUserName, password_user })
-        if (response.data.message === 'USER_NOT_FOUND') {
-            return setError(true)
+    async function login() { // Função responsável pela autenticação
+        const response = await api.post('/auth', { emailOrUserName, password_user }) // Chamada à API tipo POST para a rota /auth
+        if (response.data.message === 'USER_NOT_FOUND') { // Executa caso o usuário não seja encontrado
+            return setError(true) // Altera o estado para que mostre a mensagem
         }
         if (response.data.message === 'USER_NOT_ACTIVATED') { // Executa caso o usuário esteja bloqueado
             return setInactive(true) // Altera o estado para que mostre a mensagem
@@ -39,16 +39,16 @@ export default function Home(props) {
         
         if (auth) { // Executa se o usuário for autenticado
             props.navigation.dispatch(StackActions.reset({
-                index: 0,
+                index: 0, // "apaga" histórico de navegação para não aparecer opção de retornar à tela anterior
                 actions: [
-                    NavigationActions.navigate({ routeName: 'Profile', params: { name_user, username, email_user, token } })
+                    NavigationActions.navigate({ routeName: 'Profile', params: { name_user, username, email_user, token } }) // Navega para a rota Profile passando parâmetros
                 ]
             }))
         }
     }
 
     function register() {
-        props.navigation.navigate({ routeName: 'New' })
+        props.navigation.navigate({ routeName: 'New' }) // Navega para a rota New
     }
 
     return (

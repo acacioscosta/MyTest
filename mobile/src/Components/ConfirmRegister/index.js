@@ -4,11 +4,11 @@ import { StackActions, NavigationActions } from 'react-navigation'
 
 export default function ConfirmRegister(props) {
 
-    function goHome() {
+    function goHome() { // Executa quando o botão VOLTAR é acionado
         props.navigation.dispatch(StackActions.reset({
-            index: 0,
+            index: 0, // "apaga" histórico de navegação para não aparecer opção de retornar à tela anterior
             actions: [
-                NavigationActions.navigate({ routeName: 'Home' })
+                NavigationActions.navigate({ routeName: 'Home' }) // Navega para a rota Home
             ]
         }))
     }
@@ -24,6 +24,7 @@ export default function ConfirmRegister(props) {
     )
 }
 
+// CSS para estilização do componente
 const styles = StyleSheet.create({
     container:{
         flex: 1,

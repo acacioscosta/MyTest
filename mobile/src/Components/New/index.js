@@ -17,8 +17,8 @@ export default function Register(props) {
 
     async function register() {
       clearMsgError() // Executa função clearMsgError - Limpa mensagens de erro da tela, caso exista
-      if (name_user === '' || username === '' || email_user === '' || password_user === '' || confirmPasswordUser === '') {
-        return setErrorFieldEmpty(true)
+      if (name_user === '' || username === '' || email_user === '' || password_user === '' || confirmPasswordUser === '') { // Verifica se todos os campos estão preenchidos
+        return setErrorFieldEmpty(true) // Altera o estado para que mostre a mensagem
       }
       if ((password_user.length < 6) || (!password_user.match(/[a-z]+/)) || (!password_user.match(/[A-Z]+/))) { // Verifica se a senha informada atende aos requisitos
         return setPasswordInvalid(true) // Altera o estado para que mostre a mensagem
@@ -29,14 +29,13 @@ export default function Register(props) {
       const response = await api.post('/register', { name_user, username, email_user, password_user}) // Chamada à API para cadastro
       if (response.data.message === 'USERNAME_OR_EMAIL_ALREADY_REGISTERED') { // Executa caso exista o usuário já cadastrado
         clearMsgError() // Executa função clearMsgError - Limpa mensagens de erro da tela, caso exista
-        setUsed(true)
+        setUsed(true) // Altera o estado para que mostre a mensagem
       }
       if (response.data.message === 'USER_REGISTERED') { // Executa caso o usuário seja cadastrado
-        //props.navigation.navigate({ routeName: 'ConfirmRegister' }) // Redireciona o usuário à tela de confirmação de cadastro
         props.navigation.dispatch(StackActions.reset({
-          index: 0,
+          index: 0, // "apaga" histórico de navegação para não aparecer opção de retornar à tela anterior
           actions: [
-              NavigationActions.navigate({ routeName: 'ConfirmRegister' })
+              NavigationActions.navigate({ routeName: 'ConfirmRegister' }) // Navega para a rota ConfirmRegister
           ]
       }))
     }
@@ -48,13 +47,13 @@ export default function Register(props) {
     }
     
     function recoveryUsername(event) { // Função que recupera e armazena o valor digitado no campo de usuário
-      let lower = event.toLowerCase()  
+      let lower = event.toLowerCase() // Transforma o texto em caixa baixa
       setUsername(lower) // Armazena o valor digitado no estado username
       clearMsgError() // Executa função clearMsgError - Limpa mensagens de erro da tela, caso exista
     }
     
     function recoveryEmail(event) { // Função que recupera e armazena o valor digitado no campo de e-mail
-      let lower = event.toLowerCase()  
+      let lower = event.toLowerCase()  // Transforma o texto em caixa baixa
       setEmail(lower) // Armazena o valor digitado no estado email_user
       clearMsgError() // Executa função clearMsgError - Limpa mensagens de erro da tela, caso exista
     }
@@ -73,7 +72,7 @@ export default function Register(props) {
         setUsed(false) // Limpa mensagem de erro de usuário existente
         setPasswordInvalid(false) // Limpa mensagem de erro de senha inválida
         setErrorDifferentPassword(false) // Limpa mensagem de erro de senha e confirmação de senha divergentes
-        setErrorFieldEmpty(false)
+        setErrorFieldEmpty(false) // Limpa mensagem de erro de campo(s) vazio(s)
     }
 
     return (

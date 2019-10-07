@@ -5,30 +5,30 @@ import img from '../../assets/img.png'
 
 export default function Profile(props) {
 
-    const { name_user, username, email_user, token } = props.navigation.state.params
+    const { name_user, username, email_user, token } = props.navigation.state.params // Desestruturação para pegar dados necessários enviados nas props
     
-    const [name, setName] = useState('')
-    const [usernameProfile, setUsername] = useState('')
-    const [email, setEmail] = useState('')
-    const [tokenT, setToken] = useState('')
+    const [name, setName] = useState('') // Estado que armazena o nome completo
+    const [usernameProfile, setUsername] = useState('') // Estado que armazena o nome do usuário
+    const [email, setEmail] = useState('') // Estado que armazena o e-mail
+    const [tokenJWT, setToken] = useState('') // Estado que armazena o token jwt
 
-    function logout() {
+    function logout() { // Função responsável por fazer logout
         props.navigation.dispatch(StackActions.reset({
-            index: 0,
+            index: 0, // "apaga" histórico de navegação para não aparecer opção de retornar à tela anterior
             actions: [
-                NavigationActions.navigate({ routeName: 'Home' })
+                NavigationActions.navigate({ routeName: 'Home' }) // Navega para a rota Home
             ]
         }))
     }
 
-    useEffect(() => {
+    useEffect(() => { // Executa quando componente está montado
         
-        setName(name_user)
-        setUsername(username)
-        setEmail(email_user)
-        setToken(token)
+        setName(name_user) // Altera estado name_user
+        setUsername(username) // Altera estado username
+        setEmail(email_user) // Altera estado email_user
+        setToken(token) // Altera estado tokenJWT
 
-    }, [])
+    }, []) // Segundo parâmetro "[]" indica que será executado somente uma vez
 
     return(
         <View style={styles.container}>
