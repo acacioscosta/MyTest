@@ -30,6 +30,9 @@ export default function New({ history }) { // Componente responsável pela pági
             clearMsgError() // Executa função clearMsgError - Limpa mensagens de erro da tela, caso exista
             setUsed(true)
         }
+        if (response.data.message === 'INVALID_PASSWORD') { // Executa caso o servidor identifique senha inválida
+            return setPasswordInvalid(true) // Altera o estado para que mostre a mensagem
+        }
         if (response.data.message === 'USER_REGISTERED') { // Executa caso o usuário seja cadastrado
             //alert('Usuário cadastrado') // Avisa ao usuário sobre o cadastro
             history.push('/confirmregister') // Redireciona o usuário à tela de confirmação de cadastro
