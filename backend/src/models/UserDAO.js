@@ -11,20 +11,21 @@ module.exports = {
     register(data) { // Função register responsável pelo comando de cadastro de usuário, recebe parâmetro data
         const { name_user, username, email_user, password_user } = data // Desestruturação para para pegar apenas o que é necessário
         const password_hash = md5(password_user) // Cria um HASH da senha e armazena na constante password_hash
-        const sql = `INSERT INTO user VALUES (default, '${name_user}', '${username}', '${email_user}', '${password_hash}', default)` // Monta comando SQL que cadastra o usuário
+        const hash_active = md5(email_user) // Cria um HASH do e-mail e armazena na constante hash_active
+        const sql = `INSERT INTO user VALUES (default, '${name_user}', '${username}', '${email_user}', '${password_hash}', default, '${hash_active}')` // Monta comando SQL que cadastra o usuário
         return sql // Retorna o comando SQL
     },
 
     active(data, command) {
-        const { id } = data // Desestruturação para para pegar apenas o que é necessário
+        const { hash } = data // Desestruturação para para pegar apenas o que é necessário
         let sql // Variável que vai armazenar o comando SQL
 
         if (command === 'update') { // Executando caso o comando seja UPDATE
-            sql = `UPDATE user SET active_user = true WHERE id_user = ${id}` // Monta comando SQL que ativa o cadastro de um usuário
+            sql = `UPDATE user SET active_user = true WHERE hash_active = '${hash}'` // Monta comando SQL que ativa o cadastro de um usuário
             return sql // Retorna o comando SQL
         }
         
-        sql = `SELECT id_user, name_user, username, email_user, active_user FROM user WHERE id_user = ${id}` // Monta comando SQL que recupera os dados do usuário ativado
+        sql = `SELECT id_user, name_user, username, email_user, active_user FROM user WHERE hash_active = '${hash}'` // Monta comando SQL que recupera os dados do usuário ativado
         return sql // Retorna o comando SQL
     }
 }
