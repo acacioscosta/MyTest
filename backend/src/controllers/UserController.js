@@ -2,6 +2,7 @@ const connection = require('../../config/dbConnection') // Importa arquivo de co
 const UserDAO = require('../models/UserDAO') // Importa o model UserDAO
 const jwt = require('jsonwebtoken') // Importa o módulo para configuração do Token JWT
 const sendMail = require('../../services/sendMail') // Importa arquivo de envio de e-mail
+const md5 = require('md5') // Importa md5 para criar HASH
 require('dotenv/config') // Importa arquivo para utilização das variáveis de ambiente
 
 module.exports = {
@@ -34,19 +35,27 @@ module.exports = {
 
     async register(req, res) { // Função register responsável por cadastrar novo usuário
         const data = req.body // Armazena os valores contidos no body da requisição na constante data
+        const { password_user } = data // Desestruturação para verificar se senha é válida
+        if ((password_user.length < 6) || (!password_user.match(/[a-z]+/)) || (!password_user.match(/[A-Z]+/))) { // Verifica se a senha informada atende aos requisitos
+            return res.status(200).json({ message: 'INVALID_PASSWORD' }) // Altera o estado para que mostre a mensagem
+        }
         const sql = await UserDAO.register(data) // Armazena o resultado da execução da função register de UserDAO na constante sql
-
+    
         connection.query(sql, (error, results) => { // Faz conexão com o banco MySql, executa o sql e retorna função de callback
+            if (error) {
+                return res.json({ error })
+            }
             if (error && (error.code === "ER_DUP_ENTRY")) { // Executa caso o nome de usuário e/ou email já existe
                return res.json({ message: 'USERNAME_OR_EMAIL_ALREADY_REGISTERED' }) // Retorna resultado como JSON
             }
             if (results.affectedRows) { // Executa caso o cadastro seja efetuado
-                const id_user = results.insertId // Armazena o ID inserido da constante id_user
-                sendMail.email(data, id_user) // Executa função de envio de email passando nome de usuário, email e id_user como parâmetros
+                const { email_user } = data // Desestruturação para pegar o e-mail do usuário
+                const hash = md5(email_user) // Cria um HASH do e-mail e armazena na constante hash
+                sendMail.email(data, hash) // Executa função de envio de email passando nome de usuário, email e o hash do e-mail como parâmetros
                 return res.status(201).json({ message: 'USER_REGISTERED' }) // Retorna resultado como JSON
             }
         })
-
+    
     },
 
     async active(req, res) { // Função active responsável pela ativação do cadastro
